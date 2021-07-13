@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+    <a href="/create">New Napkin</a>
+    {% for napkin in napkins %}
+        <a href="/napkin/{{napkin._id}}">{{napkin.title}}</a>
+    {% endfor %}
+{% endblock %}

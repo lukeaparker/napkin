@@ -4,6 +4,11 @@
 <head>
   <script src="https://unpkg.com/konva@8.0.1/konva.min.js"></script>
   <meta charset="utf-8" />
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"
+></script>
   <title>Konva Canvas Scrolling Drag Demo</title>
   <style>
     body {
@@ -16,7 +21,14 @@
 </head>
 
 <body>
+  <h1>{{napkin.title}}</h1>
+    <h1>{{napkin.title}}</h1>
+    <p>{{napkin.canvas}}</p>
+  <!-- <h1>{{napkin.canvas}}</h1> -->
+
+  <button onclick="save()">Save</button>
   <div id="container"></div>
+  <h1>No Canvas</h1>
   <script>
     var width = window.innerWidth;
     var height = window.innerHeight;
@@ -168,6 +180,18 @@
     select.addEventListener('change', function () {
       mode = select.value;
     });
+
+    function save() {
+      $.ajax({
+          url: 'http://127.0.0.1:5000/update/{{napkin._id}}',
+          type: 'POST',
+          data: {'canvas': stage.toJSON()},
+          success: function(data){
+            console.log(data)
+            console.log('what up dawg')
+          }
+      });
+    }
   </script>
 </body>
 

@@ -2,13 +2,13 @@
 const {app, BrowserWindow} = require('electron')
 // import {PythonShell} from 'python-shell';
 
-const {PythonShell} = require('python-shell');
+// const {PythonShell} = require('python-shell');
 
 
-PythonShell.runString('x=1+1;print(x)', null, function (err) {
-  if (err) throw err;
-  console.log('finished');
-});
+// PythonShell.runString('x=1+1;print(x)', null, function (err) {
+//   if (err) throw err;
+//   console.log('finished');
+// });
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,10 +18,10 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
-  PythonShell.run('engine.py',null,function(err){
-    if (err) throw err;
-    console.log('finished engine');
-  });
+  // PythonShell.run('engine.py',null,function(err){
+  //   if (err) throw err;
+  //   console.log('finished engine');
+  // });
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')

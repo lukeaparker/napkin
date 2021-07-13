@@ -1,5 +1,8 @@
-# Base image
-FROM alpine:3.14
+# Base python image
+FROM python:3.7-slim-buster
+
+# Install Flask
+RUN pip install Flask
 
 # Copy the code into a folder named app
 ADD . /app
@@ -7,19 +10,10 @@ ADD . /app
 # switch the working directory to app
 WORKDIR /app
 
-# Install python and node
-RUN apk add py3-pip
-RUN apk add --update nodejs npm
-
-RUN pip install Flask
-
-# Install python dependencies
+# Install App dependencies
 RUN pip3 install -r requirements.txt
 
-# Install node dependencies  
-RUN npm install 
+# Set ENV variables
+ENV PORT 5000
 
-
-EXPOSE 5000
-CMD [ "npm", "start" ]
-
+CMD ["python", "-u", "app.py"]

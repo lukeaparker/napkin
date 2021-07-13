@@ -1,9 +1,29 @@
-version: "2"
+version: "3"
 services:
-  web:
-    build: .
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
     environment:
-    - DISPLAY=${DISPLAY}
-    volumes:
-    - /tmp/.X11-unix:/tmp/.X11-unix
-    network_mode: host
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: superSecretPassword 
+    ports:
+      - 27017:27017
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint:
+      - flask
+      - run
+      - --host=0.0.0.0
+    environment:
+      PYTHONUNBUFFERED: 1
+      FLASK_DEBUG: 1
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    volumes: ['.:/app']
