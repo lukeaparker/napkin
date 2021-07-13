@@ -44,4 +44,7 @@ def get_napkin_canvas(_id):
     napkin = napkins.find_one({'_id': ObjectId(_id)})
     return napkin['canvas']
 
-    
+@app.after_request
+def add_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response

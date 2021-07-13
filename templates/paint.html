@@ -23,7 +23,6 @@
 <body>
   <h1>{{napkin.title}}</h1>
     <h1>{{napkin.title}}</h1>
-    <p>{{napkin.canvas}}</p>
   <!-- <h1>{{napkin.canvas}}</h1> -->
 
   <button onclick="save()">Save</button>
@@ -33,11 +32,31 @@
     var width = window.innerWidth;
     var height = window.innerHeight;
 
-    var stage = new Konva.Stage({
-      container: 'container',
-      width: width,
-      height: height,
+    var canvas = null
+    $.ajax({
+        async: false, 
+        url: 'http://127.0.0.1:5000/get-napkin-canvas/{{napkin._id}}',
+        type: 'GET',
+        success: function(data){
+          canvas = data
+        }
     });
+
+    var stage = Konva.Node.create(canvas, 'container');
+
+    function save() {
+      $.ajax({
+          url: 'http://127.0.0.1:5000/update/{{napkin._id}}',
+          type: 'POST',
+          data: {'canvas': stage.toJSON()},
+          success: function(data){
+            console.log(data)
+            console.log('what up dawg')
+          }
+      });
+    }
+
+ 
 
     var layer = new Konva.Layer();
     stage.add(layer);
@@ -102,7 +121,7 @@
     horizontalBar.on('dragmove', function () {
       // delta in %
       const availableWidth =
-        stage.width() - PADDING * 2 - horizontalBar.width();
+      stage.width() - PADDING * 2 - horizontalBar.width();
       var delta = (horizontalBar.x() - PADDING) / availableWidth;
 
       layer.x(-(WIDTH - stage.width()) * delta);
@@ -161,6 +180,7 @@
 
     stage.on('mouseup touchend', function () {
       isPaint = false;
+      save()
     });
 
     // and core function - drawing
@@ -180,18 +200,6 @@
     select.addEventListener('change', function () {
       mode = select.value;
     });
-
-    function save() {
-      $.ajax({
-          url: 'http://127.0.0.1:5000/update/{{napkin._id}}',
-          type: 'POST',
-          data: {'canvas': stage.toJSON()},
-          success: function(data){
-            console.log(data)
-            console.log('what up dawg')
-          }
-      });
-    }
   </script>
 </body>
 
