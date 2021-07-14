@@ -22,8 +22,6 @@
 
 <body>
   <h1>{{napkin.title}}</h1>
-    <h1>{{napkin.title}}</h1>
-  <!-- <h1>{{napkin.canvas}}</h1> -->
 
   <button onclick="save()">Save</button>
   <div id="container"></div>
@@ -32,41 +30,49 @@
     var width = window.innerWidth;
     var height = window.innerHeight;
 
-    var canvas = null
+    var canvas = null;
+
+    var drawLayer = new Konva.Layer();
+
     $.ajax({
-        async: false, 
+        async: false,
         url: 'http://127.0.0.1:5000/get-napkin-canvas/{{napkin._id}}',
         type: 'GET',
         success: function(data){
-          canvas = data
+          canvas = data;
+          console.log(data)
+          drawLayer = Konva.Node.create(canvas.children[0])
         }
     });
 
     var stage = Konva.Node.create(canvas, 'container');
+    stage.add(drawLayer);
+
+    var starterStage = {
+      width: stage.width(),
+      height: stage.height(),
+      container: 'container'
+    };
+    var saveStage = null;
 
     function save() {
+      saveStage = new Konva.Stage(starterStage);
+      saveStage.add(drawLayer);
+
       $.ajax({
           url: 'http://127.0.0.1:5000/update/{{napkin._id}}',
           type: 'POST',
-          data: {'canvas': stage.toJSON()},
-          success: function(data){
-            console.log(data)
-            console.log('what up dawg')
-          }
+          data: {'canvas': saveStage.toJSON()},
+          success: function(data) {}
       });
     }
-
- 
-
-    var layer = new Konva.Layer();
-    stage.add(layer);
 
     var WIDTH = 3000;
     var HEIGHT = 3000;
 
     // now draw our bars
-    var scrollLayers = new Konva.Layer();
-    stage.add(scrollLayers);
+    var scrollLayer = new Konva.Layer();
+    stage.add(scrollLayer);
 
     const PADDING = 5;
 
@@ -87,7 +93,7 @@
         return pos;
       },
     });
-    scrollLayers.add(verticalBar);
+    scrollLayer.add(verticalBar);
 
     verticalBar.on('dragmove', function () {
       // delta in %
@@ -95,7 +101,7 @@
         stage.height() - PADDING * 2 - verticalBar.height();
       var delta = (verticalBar.y() - PADDING) / availableHeight;
 
-      layer.y(-(HEIGHT - stage.height()) * delta);
+      drawLayer.y(-(HEIGHT - stage.height()) * delta);
     });
 
     var horizontalBar = new Konva.Rect({
@@ -116,7 +122,7 @@
         return pos;
       },
     });
-    scrollLayers.add(horizontalBar);
+    scrollLayer.add(horizontalBar);
 
     horizontalBar.on('dragmove', function () {
       // delta in %
@@ -124,7 +130,7 @@
       stage.width() - PADDING * 2 - horizontalBar.width();
       var delta = (horizontalBar.x() - PADDING) / availableWidth;
 
-      layer.x(-(WIDTH - stage.width()) * delta);
+      drawLayer.x(-(WIDTH - stage.width()) * delta);
     });
 
     stage.on('wheel', function (e) {
@@ -136,36 +142,36 @@
       const minX = -(WIDTH - stage.width());
       const maxX = 0;
 
-      const x = Math.max(minX, Math.min(layer.x() - dx, maxX));
+      const x = Math.max(minX, Math.min(drawLayer.x() - dx, maxX));
 
       const minY = -(HEIGHT - stage.height());
       const maxY = 0;
 
-      const y = Math.max(minY, Math.min(layer.y() - dy, maxY));
-      layer.position({ x, y });
+      const y = Math.max(minY, Math.min(drawLayer.y() - dy, maxY));
+      drawLayer.position({ x, y });
 
       const availableHeight =
         stage.height() - PADDING * 2 - verticalBar.height();
       const vy =
-        (layer.y() / (-HEIGHT + stage.height())) * availableHeight + PADDING;
+        (drawLayer.y() / (-HEIGHT + stage.height())) * availableHeight + PADDING;
       verticalBar.y(vy);
 
       const availableWidth =
         stage.width() - PADDING * 2 - horizontalBar.width();
 
       const hx =
-        (layer.x() / (-WIDTH + stage.width())) * availableWidth + PADDING;
+        (drawLayer.x() / (-WIDTH + stage.width())) * availableWidth + PADDING;
       horizontalBar.x(hx);
     });
 
     var isPaint = false;
     var mode = 'brush';
-    var lastLine;
+    var lastLine = null;
 
     stage.on('mousedown touchstart', function (e) {
       isPaint = true;
-      var x = e.pageX - layer.x();
-      var y = e.pageY - layer.y();
+      var x = e.pageX - drawLayer.x();
+      var y = e.pageY - drawLayer.y();
       var pos = { 'x': x, 'y': y };
 
       lastLine = new Konva.Line({
@@ -175,12 +181,13 @@
           mode === 'brush' ? 'source-over' : 'destination-out',
         points: [pos.x, pos.y],
       });
-      layer.add(lastLine);
+
+      drawLayer.add(lastLine);
     });
 
     stage.on('mouseup touchend', function () {
       isPaint = false;
-      save()
+      save();
     });
 
     // and core function - drawing
@@ -189,16 +196,11 @@
         return;
       }
 
-      var x = stage.getRelativePointerPosition().x - layer.x();
-      var y = stage.getRelativePointerPosition().y - layer.y();
+      var x = stage.getRelativePointerPosition().x - drawLayer.x();
+      var y = stage.getRelativePointerPosition().y - drawLayer.y();
       var pos = { 'x': x, 'y': y };
       var newPoints = lastLine.points().concat([pos.x, pos.y]);
       lastLine.points(newPoints);
-    });
-
-    var select = document.getElementById('tool');
-    select.addEventListener('change', function () {
-      mode = select.value;
     });
   </script>
 </body>
