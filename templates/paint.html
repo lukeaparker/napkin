@@ -40,19 +40,20 @@
         type: 'GET',
         success: function(data){
           canvas = data;
-          console.log(data)
           drawLayer = Konva.Node.create(canvas.children[0])
+          console.log(drawLayer)
         }
     });
 
-    var stage = Konva.Node.create(canvas, 'container');
-    stage.add(drawLayer);
-
     var starterStage = {
-      width: stage.width(),
-      height: stage.height(),
+      width: canvas.attrs.width,
+      height: canvas.attrs.height,
       container: 'container'
     };
+
+    var stage = new Konva.Stage(starterStage);
+    stage.add(drawLayer);
+
     var saveStage = null;
 
     function save() {
@@ -182,7 +183,10 @@
         points: [pos.x, pos.y],
       });
 
+      lastLine.attrs.points = lastLine.attrs.points.slice(2);
+
       drawLayer.add(lastLine);
+      console.log(drawLayer)
     });
 
     stage.on('mouseup touchend', function () {
