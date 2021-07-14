@@ -25,7 +25,7 @@
 
   <button onclick="save()">Save</button>
   <div id="container"></div>
-  <h1>No Canvas</h1>
+  <div id="hidden"></div>
   <script>
     var width = window.innerWidth;
     var height = window.innerHeight;
@@ -40,8 +40,7 @@
         type: 'GET',
         success: function(data){
           canvas = data;
-          drawLayer = Konva.Node.create(canvas.children[0])
-          console.log(drawLayer)
+          drawLayer = Konva.Node.create(canvas.children[0]);
         }
     });
 
@@ -57,7 +56,13 @@
     var saveStage = null;
 
     function save() {
-      saveStage = new Konva.Stage(starterStage);
+      var saveStageConfig = {
+        width: canvas.attrs.width,
+        height: canvas.attrs.height,
+        container: 'hidden'
+      };
+
+      saveStage = new Konva.Stage(saveStageConfig);
       saveStage.add(drawLayer);
 
       $.ajax({
@@ -66,6 +71,10 @@
           data: {'canvas': saveStage.toJSON()},
           success: function(data) {}
       });
+
+      $('#hidden')[0].style.display = 'none';
+
+      stage.add(drawLayer);
     }
 
     var WIDTH = 3000;
@@ -170,6 +179,7 @@
     var lastLine = null;
 
     stage.on('mousedown touchstart', function (e) {
+      console.log("asdfasdf")
       isPaint = true;
       var x = e.pageX - drawLayer.x();
       var y = e.pageY - drawLayer.y();
@@ -183,14 +193,14 @@
         points: [pos.x, pos.y],
       });
 
-      lastLine.attrs.points = lastLine.attrs.points.slice(2);
-
       drawLayer.add(lastLine);
-      console.log(drawLayer)
     });
 
     stage.on('mouseup touchend', function () {
       isPaint = false;
+
+      lastLine.attrs.points = lastLine.attrs.points.slice(2);
+
       save();
     });
 
