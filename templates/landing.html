@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="justify-content-center text-center">
+    <i class="fas fa-paint-roller" style="font-size: 200px; color: orange; margin: 30px;"></i>
+    <h1>Welcome to Napkin</h1>
+    <p>Easily create, share, and review hand written notes on the web.</p>
+</div>
+<div class="container justify-content-center text-center w-50">
+    <div class="row">
+        <div class="col">
+            <a href="/login" class="form-control buble-button">Login</a>
+
+        </div>
+        <div class="col">
+            <a href="/register" class="form-control buble-button" style="color: black; background-color: white;">Sign Up</a>
+
+        </div>
+    </div>        
+</div>
+
+{% endblock %}

@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-    <a href="/create">New Napkin</a>
-    {% for napkin in napkins %}
-        <a href="/napkin/{{napkin._id}}">{{napkin.title}}</a>
-    {% endfor %}
+    <div class="container text-right">
+        <a style="margin-right: 43px; font-size: 25px; color: orange;" href="/create"><i class="fas fa-plus-circle"></i></a>
+    </div>
+    <div class="container" >
+        {% for napkin in napkins %}
+        <div class="mt-3">
+            {% include '/partials/napkin-card.html' %}
+        </div>
+  {% endfor %}
+    </div>
 {% endblock %}

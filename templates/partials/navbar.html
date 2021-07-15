@@ -1,0 +1,16 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><i class="fas fa-paint-roller" style="color: orange;"> </i> napkin</a>
+        {% if napkin %}
+        <form action="/update/{{napkin._id}}" method="get">
+            <input type="text" class="no-outline" name="title" value="{{napkin.title}}" style="background-color: transparent; border: none; color: white;">
+        </form>
+        {% endif %}
+        {% if user %}
+            <a class="btn" href="/logout"><i class="fas fa-user"> {{user['first_name']}} {{user['last_name']}}</i>
+            <a class="btn" href="/logout"><i class="fas fa-sign-out-alt"> Logout</i>
+            </a>
+        {% endif %}
+    </div>
+</nav>
+
