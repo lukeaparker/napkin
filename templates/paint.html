@@ -33,8 +33,8 @@
       font-size: 16px;
       margin: 4px 4px;
     }
-    button:hover, button:active {
-      background-color: #313437;
+    button:hover, button.active {
+      background-color: #414447;
     }
     #marker {
       top: 75px;
@@ -54,7 +54,7 @@
 <body>
   <h1>{{napkin.title}}</h1>
   <div id="container"></div>
-  <button id="marker">
+  <button id="marker" class="active" >
     <span class="material-icons-outlined">
       edit
     </span>
@@ -71,6 +71,54 @@
   </button>
   <div id="hidden"></div>
   <script>
+    var isPaint = false;
+    var mode = 'brush';
+    var activeColor = '#eeeeee';
+    var currentColor = '#eeeeee';
+
+    var markerButton = $('#marker');
+    var eraserButton = $('#eraser');
+    var lineButton = $('#line');
+
+    markerButton.on('click', function () {
+      if (!markerButton.hasClass('active')) {
+        markerButton.addClass('active');
+        if (mode === 'eraser') {
+          eraserButton.removeClass('active');
+          activeColor = currentColor;
+        } else {
+          lineButton.removeClass('active');
+        }
+        mode = 'brush';
+      }
+    });
+
+    eraserButton.on('click', function () {
+      if (!eraserButton.hasClass('active')) {
+        eraserButton.addClass('active');
+        activeColor = '#23272a';
+        if (mode === 'brush') {
+          markerButton.removeClass('active');
+        } else {
+          lineButton.removeClass('active');
+        }
+        mode = 'eraser';
+      }
+    });
+
+    lineButton.on('click', function () {
+      if (!lineButton.hasClass('active')) {
+        lineButton.addClass('active');
+        if (mode === 'brush') {
+          markerButton.removeClass('active');
+        } else {
+          eraserButton.removeClass('active');
+          activeColor = currentColor;
+        }
+        mode = 'line';
+      }
+    });
+
     var width = window.innerWidth;
     var height = window.innerHeight;
 
@@ -218,19 +266,16 @@
       horizontalBar.x(hx);
     });
 
-    var isPaint = false;
-    var mode = 'brush';
     var lastLine = null;
 
     stage.on('mousedown touchstart', function (e) {
-      console.log("asdfasdf")
       isPaint = true;
       var x = e.pageX - drawLayer.x();
       var y = e.pageY - drawLayer.y();
       var pos = { 'x': x, 'y': y };
 
       lastLine = new Konva.Line({
-        stroke: '#df4b26',
+        stroke: activeColor,
         strokeWidth: 5,
         globalCompositeOperation:
           mode === 'brush' ? 'source-over' : 'destination-out',
