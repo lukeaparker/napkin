@@ -10,21 +10,65 @@
     crossorigin="anonymous"
 ></script>
   <title>Konva Canvas Scrolling Drag Demo</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+    rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #f0f0f0;
+      background-color: #23272a;
+      color: #ffffff;
+    }
+    button {
+      position: absolute;
+      background-color: #2c2f33;
+      border: #23272a solid 1px;
+      color: #ffffff;
+      border-radius: 50%;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 4px;
+    }
+    button:hover, button:active {
+      background-color: #313437;
+    }
+    #marker {
+      top: 75px;
+      left: 0px;
+    }
+    #eraser {
+      top: 150px;
+      left: 0px;
+    }
+    #line {
+      top: 225px;
+      left: 0px;
     }
   </style>
 </head>
 
 <body>
   <h1>{{napkin.title}}</h1>
-
-  <button onclick="save()">Save</button>
   <div id="container"></div>
+  <button id="marker">
+    <span class="material-icons-outlined">
+      edit
+    </span>
+  </button>
+  <button id="eraser">
+    <span class="material-icons-outlined">
+      edit_off
+    </span>
+  </button>
+  <button id="line">
+    <span class="material-icons-outlined">
+      border_color
+    </span>
+  </button>
   <div id="hidden"></div>
   <script>
     var width = window.innerWidth;
