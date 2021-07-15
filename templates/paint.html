@@ -278,10 +278,9 @@
         stroke: activeColor,
         strokeWidth: 5,
         globalCompositeOperation:
-          mode === 'brush' ? 'source-over' : 'destination-out',
+          mode === 'brush' || mode === 'line' ? 'source-over' : 'destination-out',
         points: [pos.x, pos.y],
       });
-
       drawLayer.add(lastLine);
     });
 
@@ -298,12 +297,24 @@
       if (!isPaint) {
         return;
       }
-
-      var x = stage.getRelativePointerPosition().x - drawLayer.x();
-      var y = stage.getRelativePointerPosition().y - drawLayer.y();
-      var pos = { 'x': x, 'y': y };
-      var newPoints = lastLine.points().concat([pos.x, pos.y]);
-      lastLine.points(newPoints);
+      if (mode !== 'line') {
+        var x = stage.getRelativePointerPosition().x - drawLayer.x();
+        var y = stage.getRelativePointerPosition().y - drawLayer.y();
+        var pos = { 'x': x, 'y': y };
+        var newPoints = lastLine.points().concat([pos.x, pos.y]);
+        lastLine.points(newPoints);
+      } else {
+        var x = stage.getRelativePointerPosition().x - drawLayer.x();
+        var y = stage.getRelativePointerPosition().y - drawLayer.y();
+        var pos = { 'x': x, 'y': y };
+        var newPoints = null;
+        if (lastLine.points().length < 3) {
+          newPoints = lastLine.points().concat([pos.x, pos.y]);
+        } else {
+          newPoints = lastLine.points().slice(0, 4).concat([pos.x, pos.y]);
+        }
+        lastLine.points(newPoints);
+      }
     });
   </script>
 </body>
