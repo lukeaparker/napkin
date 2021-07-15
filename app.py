@@ -29,8 +29,8 @@ def login_required():
             if 'user' not in session:
                 return redirect('/login')
             else:
-                user = users.find_user(ObjectId(session['user'])
-                if user == False:
+                user = users.find_user(ObjectId(session['user']))
+                if user == None:
                     return redirect('/login')
             return func(*args, **kwargs)
         return wrapper
