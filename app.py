@@ -28,7 +28,7 @@ def create():
     new_napkin = napkins.insert_one({
         'title': 'Untitled Napkin',
         'canvas': {
-            'attrs': {'height': 562, 'width': 1920},
+            'attrs': {'height': 4000, 'width': 1000},
             'className': 'Stage',
             'children': []
         }
