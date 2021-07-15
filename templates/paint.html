@@ -10,23 +10,115 @@
     crossorigin="anonymous"
 ></script>
   <title>Konva Canvas Scrolling Drag Demo</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+    rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #f0f0f0;
+      background-color: #23272a;
+      color: #ffffff;
+    }
+    button {
+      position: absolute;
+      background-color: #2c2f33;
+      border: #23272a solid 1px;
+      color: #ffffff;
+      border-radius: 50%;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 4px;
+    }
+    button:hover, button.active {
+      background-color: #414447;
+    }
+    #marker {
+      top: 75px;
+      left: 0px;
+    }
+    #eraser {
+      top: 150px;
+      left: 0px;
+    }
+    #line {
+      top: 225px;
+      left: 0px;
     }
   </style>
 </head>
 
 <body>
   <h1>{{napkin.title}}</h1>
-
-  <button onclick="save()">Save</button>
   <div id="container"></div>
+  <button id="marker" class="active" >
+    <span class="material-icons-outlined">
+      edit
+    </span>
+  </button>
+  <button id="eraser">
+    <span class="material-icons-outlined">
+      edit_off
+    </span>
+  </button>
+  <button id="line">
+    <span class="material-icons-outlined">
+      border_color
+    </span>
+  </button>
   <div id="hidden"></div>
   <script>
+    var isPaint = false;
+    var mode = 'brush';
+    var activeColor = '#eeeeee';
+    var currentColor = '#eeeeee';
+
+    var markerButton = $('#marker');
+    var eraserButton = $('#eraser');
+    var lineButton = $('#line');
+
+    markerButton.on('click', function () {
+      if (!markerButton.hasClass('active')) {
+        markerButton.addClass('active');
+        if (mode === 'eraser') {
+          eraserButton.removeClass('active');
+          activeColor = currentColor;
+        } else {
+          lineButton.removeClass('active');
+        }
+        mode = 'brush';
+      }
+    });
+
+    eraserButton.on('click', function () {
+      if (!eraserButton.hasClass('active')) {
+        eraserButton.addClass('active');
+        activeColor = '#23272a';
+        if (mode === 'brush') {
+          markerButton.removeClass('active');
+        } else {
+          lineButton.removeClass('active');
+        }
+        mode = 'eraser';
+      }
+    });
+
+    lineButton.on('click', function () {
+      if (!lineButton.hasClass('active')) {
+        lineButton.addClass('active');
+        if (mode === 'brush') {
+          markerButton.removeClass('active');
+        } else {
+          eraserButton.removeClass('active');
+          activeColor = currentColor;
+        }
+        mode = 'line';
+      }
+    });
+
     var width = window.innerWidth;
     var height = window.innerHeight;
 
@@ -174,25 +266,21 @@
       horizontalBar.x(hx);
     });
 
-    var isPaint = false;
-    var mode = 'brush';
     var lastLine = null;
 
     stage.on('mousedown touchstart', function (e) {
-      console.log("asdfasdf")
       isPaint = true;
       var x = e.pageX - drawLayer.x();
       var y = e.pageY - drawLayer.y();
       var pos = { 'x': x, 'y': y };
 
       lastLine = new Konva.Line({
-        stroke: '#df4b26',
+        stroke: activeColor,
         strokeWidth: 5,
         globalCompositeOperation:
-          mode === 'brush' ? 'source-over' : 'destination-out',
+          mode === 'brush' || mode === 'line' ? 'source-over' : 'destination-out',
         points: [pos.x, pos.y],
       });
-
       drawLayer.add(lastLine);
     });
 
@@ -209,12 +297,24 @@
       if (!isPaint) {
         return;
       }
-
-      var x = stage.getRelativePointerPosition().x - drawLayer.x();
-      var y = stage.getRelativePointerPosition().y - drawLayer.y();
-      var pos = { 'x': x, 'y': y };
-      var newPoints = lastLine.points().concat([pos.x, pos.y]);
-      lastLine.points(newPoints);
+      if (mode !== 'line') {
+        var x = stage.getRelativePointerPosition().x - drawLayer.x();
+        var y = stage.getRelativePointerPosition().y - drawLayer.y();
+        var pos = { 'x': x, 'y': y };
+        var newPoints = lastLine.points().concat([pos.x, pos.y]);
+        lastLine.points(newPoints);
+      } else {
+        var x = stage.getRelativePointerPosition().x - drawLayer.x();
+        var y = stage.getRelativePointerPosition().y - drawLayer.y();
+        var pos = { 'x': x, 'y': y };
+        var newPoints = null;
+        if (lastLine.points().length < 3) {
+          newPoints = lastLine.points().concat([pos.x, pos.y]);
+        } else {
+          newPoints = lastLine.points().slice(0, 4).concat([pos.x, pos.y]);
+        }
+        lastLine.points(newPoints);
+      }
     });
   </script>
 </body>
