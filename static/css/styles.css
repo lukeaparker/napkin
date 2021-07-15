@@ -1,3 +1,15 @@
 body {
-    background-color: red;
+    background-color: #23272a;
+    color: white;
+}
+
+.buble-button {
+    border-radius: 15px;
+    background-color: orange;
+    border-color: orange;
+    color: white;
+}
+
+.input-field {
+    border-radius: 15px;
 }

@@ -11,9 +11,7 @@ from models import Users
 
 
 app = Flask(__name__)
-print('you bitch')
 app.config['SECRET_KEY'] = 'please'    
-print('you bitch')
 
 # Setup database
 client = MongoClient('mongodb://root:superSecretPassword@mongo:27017/napkin?authSource=admin')
@@ -67,6 +65,7 @@ def login():
             'password': request.form.get('password').encode('utf-8'),
         }
         user = users.verify_credentials(user_credentials)
+        print(user)
         if user != False:
             session['user'] = str(user['_id'])
             return redirect('/index')
@@ -77,7 +76,7 @@ def login():
 @app.route('/logout')
 def logout():
     session['user'] = None 
-    return redirect('/logout')
+    return redirect('/login')
 
 # Index view         
 @app.route("/index")

@@ -8,14 +8,18 @@ class Users():
     def create_user(self, user):
         self.users.insert_one(user)
         user = self.users.find_one({'email': user['email']})
+        print(user)
 
     
     def verify_credentials(self, user_credentials):
+        print('cred', user_credentials)
         user = self.users.find_one({'email': user_credentials['email']})
-        if not user or not bcrypt.checkpw(user_credentials['password'], user['password']):
-            return False 
-        else:
+        print('user', user)
+        if user and bcrypt.checkpw(user_credentials['password'], user['password']):
             return user 
+        else:
+            print('login failed')
+            return False 
     
     def find_user(self, _id):
         user = self.users.find_one({'_id': _id})
