@@ -1,4 +1,4 @@
-![alt text](https://github.com/lukeaparker/napkin-server/thumbnails/napkin-thumbnail.png)
+![alt text](https://github.com/lukeaparker/napkin-server/blob/master/thumbnails/napkin-thumbnail.png)
 
 # Napkin
 Napkin is a cross platform application that allows you to easily store your hand written notes in one place. It has a web app in addition to a desktop client that utalize the same API to store all your notes on one platform. 
