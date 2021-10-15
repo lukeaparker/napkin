@@ -1,16 +1,21 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><i class="fas fa-paint-roller" style="color: orange;"> </i> napkin</a>
-        {% if napkin %}
-        <form action="/update/{{napkin._id}}" method="get">
-            <input type="text" class="no-outline" name="title" value="{{napkin.title}}" style="background-color: transparent; border: none; color: white;">
-        </form>
-        {% endif %}
+        <div>
+          <a class="btn" href="javascript:history.back()"><span class="fa fa-chevron-left"></span></a>
+          <a class="btn" href="javascript:history.forward()"><span class="fa fa-chevron-right"></span></a>
+        </div>
         {% if user %}
-            <a class="btn" href="/logout"><i class="fas fa-user"> {{user['first_name']}} {{user['last_name']}}</i>
-            <a class="btn" href="/logout"><i class="fas fa-sign-out-alt"> Logout</i>
-            </a>
+
+        {% if napkin %}
+          <form action="/update-title/{{napkin._id}}" method="POST" style="margin-right: 70%;">
+            <input name="title" class="edit-title no-outline" type="text" value="{{napkin.title}}">
+          </form>
         {% endif %}
+
+        <div>
+          <a class="btn" href="/logout">LOGOUT</a>
+        </div>
+      {% endif %}
     </div>
 </nav>
 

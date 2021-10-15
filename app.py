@@ -8,7 +8,7 @@ from bson.objectid import ObjectId
 import bcrypt 
 from functools import wraps
 from models import Users
-
+from os import environ
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'please'    
@@ -39,6 +39,11 @@ def login_required():
 def add_header(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
+
+# User registration 
+@app.route("/", methods=['GET'])
+def landing_page():
+    return render_template('landing.html')
 
 # User registration 
 @app.route("/register", methods=['GET', 'POST'])
@@ -72,7 +77,6 @@ def login():
         else: 
             return redirect('/login')
 
-
 @app.route('/logout')
 def logout():
     session['user'] = None 
@@ -83,16 +87,18 @@ def logout():
 @login_required()
 def index():
     notes = napkins.find({'owner': session['user']})
-    return render_template('index.html', napkins=notes)
+    return render_template('index.html', napkins=notes, user=session['user'])
 
 # Napkin detail view 
 @app.route("/napkin/<_id>")
+@login_required()
 def napkin_detail(_id):
     napkin = napkins.find_one({'_id': ObjectId(_id)})
-    return render_template('paint.html', napkin=napkin)
+    return render_template('paint.html', napkin=napkin, user=session['user'])
 
 # Create napkin 
 @app.route("/create", methods=['GET'])
+@login_required()
 def create():
     new_napkin = napkins.insert_one({
         'owner': session['user'], 
@@ -111,13 +117,34 @@ def update(_id):
     if request.form['canvas']:
         canvas = json.loads(request.form['canvas'])
         napkin = napkins.update_one({'_id': ObjectId(_id)}, {'$set': {'canvas': canvas}})
+        title = request.form['title']
+        napkin = napkins.update_one({'_id': ObjectId(_id)}, {'$set': {'title': title}})
         return 'success'
+
+# Update title 
+@app.route("/update-title/<_id>", methods=['POST'])
+@login_required()
+def update_title(_id):
+        title = request.form['title']
+        napkin = napkins.update_one({'_id': ObjectId(_id)}, {'$set': {'title': title}})
+        return redirect(f'/napkin/{_id}')
+
 # Get napkin json 
 @app.route("/get-napkin-canvas/<_id>", methods=['GET'])
 def get_napkin_canvas(_id):
     napkin = napkins.find_one({'_id': ObjectId(_id)})
     return napkin['canvas']
 
+# Delete napkin
+@app.route("/delete/<_id>", methods=['GET'])
+@login_required()
+def delete_napkin(_id):
+        napkin = napkins.delete_one({'_id': ObjectId(_id)})
+        return redirect('/index')
+
+    
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=os.environ.get('FLASK_RUN_PORT'))
 
     
 

@@ -13,3 +13,55 @@ body {
 .input-field {
     border-radius: 15px;
 }
+
+.icon-orange {
+    border-radius: 100%;
+    background-color: #FF5F1F;
+    vertical-align: middle;
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    padding: 15px;
+    height: 50px;
+    width: 50px;
+  }
+
+  .card {
+    margin-top: 15px;
+    margin-bttom: 15px;
+    width: 100%;
+    vertical-align: middle; 
+    height: 50px;
+    background-color: black;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: none;
+  }
+
+  .searchbar {
+    background-color: white;
+    width: 60%;
+    height: 20px;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+    color: black;
+  }
+
+  a, a:hover, a:active, a:visited { color: white;  }
+
+  a:link {
+    text-decoration: none;
+  }
+
+  .edit-title {
+    background-color: #23272a;
+    color: white;
+    border: none;
+  }
+
+  input:focus{
+    outline: 0 none;
+  }
