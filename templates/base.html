@@ -1,5 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
+
+<head>
+  {% block head %}
+  <meta charset="utf-8">
   <head>
     <meta charset="utf-8">
     <script src="https://unpkg.com/konva@8.0.1/konva.min.js"></script>
@@ -16,11 +21,73 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
       rel="stylesheet">
-  </head>
-  <body>
-    {% include 'partials/navbar.html' %}
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
-  </body>
+    <script src="https://unpkg.com/konva@8.0.1/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+  ></script>
+    <title>Konva Canvas Scrolling Drag Demo</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet">
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {% block headrefs %}
+  {% include 'partials/thirdpartyincludes.html' %}
+  {% endblock headrefs %}
+
+  {% block styles %}
+
+  <link rel="shortcut icon"
+    href="{{ url_for('static', filename='favicon.ico') }} "
+    type="image/x-icon" />
+  <link rel="stylesheet" type="text/css"
+    href="{{ url_for('static', filename='css/styles.css') }}">
+  {% endblock styles %}
+
+  <title>
+    {% block title %}
+    {% endblock title %}
+  </title>
+  {% endblock head %}
+
+</head>
+
+<body class="auth">
+  {% block loggedin_view %}
+  {% if current_user %}
+  {% endif %}
+  {% include 'partials/navbar.html' %}
+  {% include 'partials/sidebar.html' %}
+  {% endblock loggedin_view %}
+  <main>
+
+    {% block content %}
+    {% block messages %}
+    {% include 'partials/flash-messages.html' %}
+    {% endblock messages %}
+    {% endblock content %}
+  </main>
+
+  <div class="overlay blur" role="dialog" aria-modal="true"
+    aria-live="assertive">
+    {% block modal %}
+
+
+    {% endblock modal %}
+  </div>
+
+  {% block scripts %}
+  <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/colors.js') }} "></script>
+  <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
+  {% endblock scripts %}
+
+  {% block third_party_js %}
+
+  {% endblock third_party_js %}
+</body>
+
 </html>

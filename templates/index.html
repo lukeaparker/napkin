@@ -1,19 +1,89 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-between">
-            <div class="col d-flex"><h1>Napkins</h3></div>
-            <div class="text-right">
-                <a class="col d-flex text-right" href="/create"><span class="fas fa-plus icon-orange"></span> </a></div>
-            </div>
-        </div>
-        <div style="width: 103%">
-            {% for napkin in napkins %}
-            {% include '/partials/napkin-card.html' %}
-        {% endfor %}  
-        </div>
+<div class="container collections">
+  {% if not napkins %}
+  <section class= "card-header">
+    <div class="flex hero center">
+      <div class="icon-label-large icon-label-clear">
+        <span class="iconify" data-icon="file-icons:api-blueprint">
+        </span>
+      </div>
+      <div>
+        <h2>No Results Found</h2>
+      </div>
     </div>
+  </section>
+  {% else %}
+  <section class="card-header flex ">
+    <div class="collection-info flex">
+      <div class="icon-label-large icon-label-black">
+        <span class="iconify" data-icon="file-icons:api-blueprint">
+        </span>
+      </div>
+      <div>
+        <h2>Napkins</h2>
+      </div>
+    </div>
+  </section>
 
 
+  <section class="card-body">
+    <table class="table table-bordered table-strip">
+      <thead>
+        <tr>
+          <th>NAME</th>
+          <th>OWNER</th>
+          <th>DATE CREATED</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
 
+        {% for napkin in napkins %}
+        <tr>
+          <td>
+            <div class="flex">
+              <div class="icon-label " data-id="{{ napkin._id }}" id="@{{ napkin._id }}">
+                <span class="iconify" data-icon="file-icons:api-blueprint"></span>
+              </div>
+              <span class="attribute label">
+                {{napkin.title}}}
+              </span>
+            </div>
+          </td>
+
+          <td>
+            <span class="attribute label">
+            </span>
+          </div>
+        </td>
+
+      <td>
+        <span class="attribute label">
+          {{napkin.date_created}}
+        </span>
+      </div>
+    </td>
+
+          <td class="flex flex-end">
+            <a class="icon-label-brightgreen" href="/blueprint/{{napkin._id}}"
+              aria-label="Review" data-tooltip="Review">
+              <span class="iconify" data-icon="ph:caret-right-bold"></span>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+
+  </section>
+  {% endif %}
+</div>
 {% endblock %}
+
+{% block modal %}
+{{ super() }}
+
+{% endblock modal %}

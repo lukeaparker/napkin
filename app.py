@@ -86,8 +86,9 @@ def logout():
 @app.route("/index")
 @login_required()
 def index():
-    notes = napkins.find({'owner': session['user']})
-    return render_template('index.html', napkins=notes, user=session['user'])
+    all_napkins = list(napkins.find({'owner': session['user']}))
+    
+    return render_template('index.html', napkins=all_napkins, user=session['user'])
 
 # Napkin detail view 
 @app.route("/napkin/<_id>")

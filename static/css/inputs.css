@@ -1,0 +1,318 @@
+.row-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em;
+}
+
+.row-wrapper>* {
+  margin: 0 0.5em;
+}
+
+.reset {
+  padding: 0 !important;
+  width: auto;
+  color: rgb(118, 118, 118);
+  background-color: transparent;
+  border: none !important;
+}
+
+.input-wrapper {
+  display: flex;
+  height: 50px;
+  position: relative;
+  /* width: 100%; */
+  padding: 1em 0;
+  align-items: center;
+  border-bottom: 1px solid rgb(219, 219, 219);
+}
+
+.input-wrapper input {
+  margin: 0 !important;
+  z-index: 99;
+}
+
+#searchform input,
+#searchform select {
+  height: 47px;
+  padding: 1em;
+}
+
+#searchform input {
+  width: max(300px, 30%);
+  border-radius: 0 2em 2em 0;
+  background-color: rgb(53, 53, 53);
+  border: none;
+  margin: 0 !important;
+  flex: 2;
+}
+
+#searchform select {
+  background-color: rgb(30, 30, 30);
+  color: grey;
+  width: max(250px, 20%);
+  flex: 1;
+  border-radius: 2em 0 0 2em;
+}
+
+#searchform input:focus {
+  outline-offset: 5px 0;
+  outline: 1px solid #2196f3;
+}
+
+#searchform {
+  padding: 0 1em;
+  border: none;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: max(450px, 40%);
+  box-sizing: border-box;
+  margin: 0 1em;
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Ctitle%3Edown-arrow%3C%2Ftitle%3E%3Cg%20fill%3D%22%23FFFFFF%22%3E%3Cpath%20d%3D%22M10.293%2C3.293%2C6%2C7.586%2C1.707%2C3.293A1%2C1%2C0%2C0%2C0%2C.293%2C4.707l5%2C5a1%2C1%2C0%2C0%2C0%2C1.414%2C0l5-5a1%2C1%2C0%2C1%2C0-1.414-1.414Z%22%20fill%3D%22%23FFFFFF%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+  background-size: 0.6em;
+  background-position: calc(100% - 1.3em) center;
+  background-repeat: no-repeat;
+}
+
+/* Hide arrow icon in IE browsers */
+.select::-ms-expand {
+  display: none;
+}
+
+.input:focus~.label,
+.input:not(:placeholder-shown)~.label {
+  transform: translateX(-0.25em) translateY(-1.5rem) scale(0.8);
+}
+
+form .label {
+  left: 0;
+  right: auto;
+  position: absolute;
+  font-size: 14px;
+  letter-spacing: normal;
+  /* transition: .3s cubic-bezier(.25,.8,.5,1); */
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgb(118, 118, 118);
+  transform-origin: top left;
+  padding: 0.5em;
+  z-index: -1;
+}
+
+.input:not(:placeholder-shown)~.label,
+.card-ext>a:hover,
+.reset:hover {
+  color: rgba(226, 226, 226, 0.8);
+}
+
+.input:focus~.label,
+.card-ext>a {
+  color: rgb(33, 150, 243);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input-wrapper:focus-within {
+  border-bottom: 1px solid rgb(33, 150, 243);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: rgba(20, 20, 20, 0.2) !important;
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 50px rgb(112, 112, 112) inset;
+  padding: 0 4px;
+}
+
+
+.text-danger {
+  color: rgb(199, 135, 135);
+  margin-left: 1em;
+}
+
+.editForm:first-child {
+  margin-top: 1.5em;
+  margin: 1em;
+}
+
+.editForm .userForm .row-wrapper {
+  margin-top: 1em;
+  justify-content: flex-end;
+}
+
+.userForm .input-wrapper.col-third {
+  flex-shrink: 3;
+  padding: 1em;
+  max-width: 20vw;
+}
+
+.userForm .input-wrapper.col-half {
+  flex-shrink: 2;
+  padding: 1em;
+  max-width: 30vw;
+  font-size: 0.8em;
+}
+
+.userForm>.row {
+  max-width: 70vw;
+  width: calc(70% - 2em);
+  flex-wrap: nowrap;
+  flex-basis: auto;
+  padding: 2em;
+}
+
+#rootConfig.container,
+#register.container,
+#dashboard .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+#rootConfig .card-header,
+#register .card-header {
+  max-width: 70vw;
+  align-self: flex-start;
+
+}
+
+#rootConfig .card,
+#register .card {
+  max-width: 70vw;
+  margin: 2em;
+  padding: 1.5em 3em;
+  justify-self: center;
+  align-self: center;
+  width: min(900px, 70vw);
+
+  background: rgba(31, 64, 55, 0.1);
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, rgba(62, 102, 83, 0.1), rgba(31, 65, 56, 0.2));
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, rgba(62, 102, 83, 0.1), rgba(31, 65, 56, 0.2));
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-blend-mode: overlay;
+  filter: drop-shadow(0 0 0.75rem rgba(34, 3, 9, 0.8));
+}
+
+
+#form-register-user .card-body {
+  max-width: 70vw;
+  justify-self: center;
+  align-self: center;
+}
+
+#form-register-user .row,
+#user-login .row,
+#editOrganizationForm .row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 0 !important;
+  /* margin: 1em 0 !important; */
+}
+
+#search-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1em;
+  margin: 1em;
+}
+
+
+#form-register-user .input-wrapper,
+#loginForm .input-wrapper {
+  flex: 1;
+  width: min(150px, 30vw);
+  padding: 0 !important;
+
+  margin: 0 1em;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+#form-register-user input,
+#loginForm input {
+  justify-content: center;
+
+  flex: 1;
+  width: 100% !important;
+}
+
+#form-register-user button.blue {
+  flex: 0;
+  margin-left: auto;
+  margin-right: 1em;
+}
+
+#user-login .buttons,
+#editOrganizationForm .buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.buttons>* {
+  margin: 0 .5em;
+}
+
+.buttons .reset {
+  text-align: right;
+}
+
+/* placeholder icons via cdn from https://icon-sets.iconify.design/
+*/
+.iconify-inline {
+  padding: 0.5rem;
+  padding-left: 0;
+  font-size: 1rem;
+  filter: opacity(0.5);
+  min-width: 25px;
+}
+
+
+.iconify-inline~.label {
+  padding-left: 2em;
+  z-index: -10;
+}
+
+.card-footer {
+  display: flex;
+  flex: 1;
+  margin-left: auto;
+  margin-right: 1em;
+  justify-content: flex-end;
+
+}
+
+#register a {
+  display: inline;
+  color: rgb(33, 150, 243);
+}
+
+#register a:hover {
+  text-decoration: none;
+  color: white;
+
+}

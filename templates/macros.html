@@ -1,0 +1,96 @@
+{# NOTE: this macro has two functions:
+    1. to generate sidebar links (replacing the former partial:
+        -> 'partials/collection-list-item.html'
+    2. sets an active style to the sidebar list item of the current page
+  
+    TO USE:
+    - initialize at the top of sidebar.html: {% from "macros.html" import nav_link with context %}
+    - call it in the loop of the sidebar collection items list (~ line 65)
+    #}
+  
+  {% macro nav_link(app_title, item) %}
+  
+  {% if app_title == 'Query' %}
+  {% set url = "/folder/" + item._id|string %}
+  {% set name = item.name %}
+  {% set icon = "akar-icons:folder" %}
+  
+  {# 'Group' and 'Organization' are both parts of 'Core' #}
+  {% elif app_title == 'Group' %}
+  {% set url = "/group/" + item._id|string %}
+  {% set name = item.name %}
+  {% set icon = "clarity:group-solid" %}
+  
+  {% elif app_title == 'Organization' %}
+  {% set url = "/core/organization/" + item._id|string %}
+  {% set name = item.name %}
+  {% set icon = "clarity:group-solid" %}
+  
+  {% elif app_title == 'Forms' %}
+  {% set url = "/form/" + item._id|string %}
+  {% set name = item.name %}
+  {% set icon = "mdi:form-select" %}
+  
+  {% elif app_title == 'Blueprints' %}
+  {% set url = "/blueprint/" + item._id|string %}
+  {% set name = item.name %}
+  {% set icon = "file-icons:api-blueprint" %}
+  
+  {% elif app_title == 'Reports' %}
+  {% set url = "/reports/template/" + item.sid %}
+  {% set name = item.name %}
+  {% set icon = "iconoir:reports" %}
+  
+  {% endif %}
+  
+  
+  {% if request.path == url %}
+  {% set active = 'active' %}
+  {% else %}
+  {% set active = '' %}
+  {% endif %}
+  
+  {% if app_title == 'Organization' %}
+    <li class="flex row {{active}}">
+    <a class="flex object" href="{{url}}" aria-label="Object">
+      <div class="icon-label initials" data-id="{{ item._id }}" id="@{{ item.name }}">
+        <span class="iconify" data-icon="{{icon}}">
+        </span>
+      </div>
+      <span class="label">
+        {{name}}
+      </span>
+    </a>
+  </li>
+  
+  {% elif app_title == 'Group' %}
+    <li class="flex row {{active}}">
+    <a class="flex object" href="{{url}}" aria-label="Object">
+      <div class="icon-label" data-id="{{ item._id }}{{ item.name }}" id="@{{ item.name }}">
+        <span class="iconify" data-icon="{{icon}}">
+        </span>
+      </div>
+      <span class="label">
+        {{name}}
+      </span>
+    </a>
+  </li>
+  
+  
+  {% else %}
+  
+  <li class="flex row {{active}}">
+    <a class="flex object" href="{{url}}" aria-label="Object">
+      <div class="icon-label" data-id="{{ item._id }}" id="{{ item._id }}">
+        <span class="iconify" data-icon="{{icon}}">
+        </span>
+      </div>
+      <span class="label">
+        {{name}}
+      </span>
+    </a>
+  </li>
+  {% endif %}
+  
+  {% endmacro %}
+  
