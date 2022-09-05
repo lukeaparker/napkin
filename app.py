@@ -19,6 +19,13 @@ db = client.get_default_database()
 napkins = db.napkins
 users = Users(db)
 
+@app.context_processor
+def inject_context():
+    all_napkins = list(napkins.find({'owner': session['user']}))
+    return dict(all_napkins=all_napkins)
+
+
+
 # Auth middlewear 
 def login_required():
     def decorator(func):

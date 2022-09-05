@@ -8,40 +8,12 @@
     - call it in the loop of the sidebar collection items list (~ line 65)
     #}
   
-  {% macro nav_link(app_title, item) %}
+  {% macro nav_link(napkin) %}
   
-  {% if app_title == 'Query' %}
-  {% set url = "/folder/" + item._id|string %}
-  {% set name = item.name %}
-  {% set icon = "akar-icons:folder" %}
-  
-  {# 'Group' and 'Organization' are both parts of 'Core' #}
-  {% elif app_title == 'Group' %}
-  {% set url = "/group/" + item._id|string %}
-  {% set name = item.name %}
-  {% set icon = "clarity:group-solid" %}
-  
-  {% elif app_title == 'Organization' %}
-  {% set url = "/core/organization/" + item._id|string %}
-  {% set name = item.name %}
-  {% set icon = "clarity:group-solid" %}
-  
-  {% elif app_title == 'Forms' %}
-  {% set url = "/form/" + item._id|string %}
-  {% set name = item.name %}
-  {% set icon = "mdi:form-select" %}
-  
-  {% elif app_title == 'Blueprints' %}
-  {% set url = "/blueprint/" + item._id|string %}
-  {% set name = item.name %}
-  {% set icon = "file-icons:api-blueprint" %}
-  
-  {% elif app_title == 'Reports' %}
-  {% set url = "/reports/template/" + item.sid %}
-  {% set name = item.name %}
+  {% set url = "/napkin/" + napkin._id|string %}
+  {% set name = napkin.title %}
   {% set icon = "iconoir:reports" %}
   
-  {% endif %}
   
   
   {% if request.path == url %}
@@ -50,47 +22,21 @@
   {% set active = '' %}
   {% endif %}
   
-  {% if app_title == 'Organization' %}
-    <li class="flex row {{active}}">
-    <a class="flex object" href="{{url}}" aria-label="Object">
-      <div class="icon-label initials" data-id="{{ item._id }}" id="@{{ item.name }}">
-        <span class="iconify" data-icon="{{icon}}">
-        </span>
-      </div>
-      <span class="label">
-        {{name}}
-      </span>
-    </a>
-  </li>
+
   
-  {% elif app_title == 'Group' %}
-    <li class="flex row {{active}}">
-    <a class="flex object" href="{{url}}" aria-label="Object">
-      <div class="icon-label" data-id="{{ item._id }}{{ item.name }}" id="@{{ item.name }}">
-        <span class="iconify" data-icon="{{icon}}">
-        </span>
-      </div>
-      <span class="label">
-        {{name}}
-      </span>
-    </a>
-  </li>
-  
-  
-  {% else %}
+
   
   <li class="flex row {{active}}">
     <a class="flex object" href="{{url}}" aria-label="Object">
-      <div class="icon-label" data-id="{{ item._id }}" id="{{ item._id }}">
+      <div class="icon-label" data-id="{{ napkin._id }}" id="@{{ napkin._id }}">
         <span class="iconify" data-icon="{{icon}}">
         </span>
       </div>
       <span class="label">
-        {{name}}
+        {{ napkin.title}}
       </span>
     </a>
   </li>
-  {% endif %}
   
   {% endmacro %}
   

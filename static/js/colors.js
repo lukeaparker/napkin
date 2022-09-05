@@ -35,19 +35,19 @@ function setInitials(name) {
 
 // sets the icon color based on the data-id (objectId) value
 function setIconColor(id) {
-  const item = document.getElementById(id);
-  const dataId = item.getAttribute("data-id");
+  const napkin = document.getElementById(id);
+  const dataId = napkin.getAttribute("data-id");
 
   // console.log(dataId);
   console.log(id, " - ", stringToHSLColor(dataId));
-  item?.style.setProperty("--custom-color", `${stringToHSLColor(dataId)}`);
+  napkin?.style.setProperty("--custom-color", `${stringToHSLColor(dataId)}`);
 }
 
 // set background color of body on any single object view (views that aren't collections, like search or all users/orgs/etc)
 function setBodyBackgroundColor(id) {
   const body = document.querySelector("body");
-  const item = document.getElementById(id);
-  const dataId = item.getAttribute("data-id");
+  const napkin = document.getElementById(id);
+  const dataId = napkin.getAttribute("data-id");
   if (dataId) {
     body?.style.setProperty(
       "--custom-color",
@@ -61,24 +61,24 @@ function setBodyBackgroundColor(id) {
 }
 
 // sets the headerIcon colors & initials for all avatar circles
-document.querySelectorAll(".icon-label").forEach((item) => {
-  setIconColor(item.id);
-  if (item.classList.contains("initials")) {
-    item.textContent = setInitials(item.id);
+document.querySelectorAll(".icon-label").forEach((napkin) => {
+  setIconColor(napkin.id);
+  if (napkin.classList.contains("initials")) {
+    napkin.textContent = setInitials(napkin.id);
   }
 });
 
 // sets the headerIcon colors & initials for all avatar circles
-document.querySelectorAll(".icon-label-large").forEach((item) => {
-  const initials = item.id.substring(item.id.indexOf("-") + 1);
+document.querySelectorAll(".icon-label-large").forEach((napkin) => {
+  const initials = napkin.id.substring(napkin.id.indexOf("-") + 1);
 
-  if (item.classList.contains("initials")) {
-    item.textContent = setInitials(initials);
+  if (napkin.classList.contains("initials")) {
+    napkin.textContent = setInitials(initials);
   }
 });
 
-document.querySelectorAll(".card-header").forEach((item) => {
-  if (item.id) {
-    setBodyBackgroundColor(item.id);
+document.querySelectorAll(".card-header").forEach((napkin) => {
+  if (napkin.id) {
+    setBodyBackgroundColor(napkin.id);
   }
 });
