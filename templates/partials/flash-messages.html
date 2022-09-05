@@ -1,0 +1,18 @@
+<div class="messages">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul role="list" class="flashes">
+      {% for message in messages %}
+      <li class="flex row">
+        <span class="iconify" data-icon="typcn:info-outline"
+          style="color: #d5ab09;"></span>
+        <span> {{ message }} </span>
+        <span class="iconify" data-icon="typcn:info-outline"
+          style="color: #d5ab09;"></span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+  </div>
+ 

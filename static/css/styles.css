@@ -361,6 +361,11 @@ a.text-blue:hover {
   align-self: center !important;
 }
 
+
+
+
+
+
 .icon-label-large {
   padding: 0.25em;
   margin-inline: 0.35em;
@@ -392,6 +397,8 @@ a.text-blue:hover {
 }
 
 .icon-label-orange {
+  font-size: 2em !important;
+
   background-color: var(--orange);
 }
 
@@ -628,9 +635,6 @@ body.auth {
 }
 
 body.unauth {
-  background: rgb(5, 40, 74);
-  background: linear-gradient(to top, rgb(2, 16, 31) 0%, rgb(1, 88, 105) 100%);
-
   flex: 1;
   flex-direction: row;
   justify-content: center;
@@ -1513,8 +1517,8 @@ tr:nth-child(even) {
   display: none;
   position: absolute;
   min-width: auto;
-  margin-top: 2.5rem;
-  margin-right: 1rem;
+  margin-top: 3rem;
+  margin-right: 4rem;
   margin-left: 0 !important;
   border-radius: 1rem;
   width: 200px;

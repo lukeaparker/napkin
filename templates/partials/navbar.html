@@ -3,7 +3,7 @@
   {% set is_workspace = url_for(request.endpoint, **request.view_args) == '/workspace' %}
   <nav class="navbar-top" aria-label="primary">
     {% if not is_workspace %}  
-      <div class="flex actions" style="padding-right: 10px;">
+      <div class="flex actions">
         <button class="icon-label-black" type="button" style="margin-right: 1em" id="nav-back"  onclick="history.back()">
           <span class="iconify" data-icon="ph:caret-left-bold"></span>
         </button>
@@ -11,23 +11,54 @@
         <button class="icon-label-black"  type="button" id="nav-forward" onclick="history.forward()">
           <span class="iconify" data-icon="ph:caret-right-bold"></span>
         </button>
+
+
+        
       </div>
 
-      <button id="marker" class="active" >
-        <span class="material-icons-outlined">
-          edit
-        </span>
-      </button>
-      <button id="eraser">
-        <span class="material-icons-outlined">
-          edit_off
-        </span>
-      </button>
-      <button id="line">
-        <span class="material-icons-outlined">
-          border_color
-        </span>
-      </button>
+{% if napkin %}
+      <form action="/update-title/{{napkin._id}}" method="POST">
+        <input name="title" class="edit-title no-outline" type="text" value="{{napkin.title}}">
+      </form>
+
+
+
+        <button id="marker" class="active" style="margin-left: 90%;">
+          <span class="material-icons-outlined">
+            edit
+          </span>
+        </button>
+        <button id="eraser">
+          <span class="material-icons-outlined">
+            edit_off
+          </span>
+        </button>
+        <button id="line">
+          <span class="material-icons-outlined">
+            border_color
+          </span>
+        </button>
+
+        {% endif %}
+
+
+
+
+      
+   
+
+
+
+
+
+
+
+
+
+
+
+  
+
       <!-- <input value="#eeeeee" type="color" id="color"> -->
     {% endif %}
 
@@ -52,28 +83,24 @@
         <li class="flex flex-column dropdown" aria-haspopup="true">
           <button class="icon-button" aria-controls="user-account-menu" aria-label="submenu" aria-haspopup="true"
             aria-label="User Account Menu" aria-expanded="false" tabindex="0">
-            <div class="icon-label initials" data-id="jj"
-              id="@">
+            <div class="icon-label initials" data-id="{{user._id}}"
+              id="{{current_user.first_name}} {{current_user.last_name}}">
               <span class="iconify" data-icon="clarity:id-badge-solid"> </span>
             </div>
 
             <div class="user">
-              <span class="ms-1">Luke&nbsp;Parker</span>
-              <span class="iconify-inline" data-icon="ci:dot-03-m"></span>
-              <span> pp </span>
+              <span class="ms-1">{{current_user.first_name}}&nbsp;{{current_user.last_name}}</span>
+             
             </div>
           </button>
 
-          <div class="flex dropdown-content">
+          <div class="flex blur dropdown-content">
             <div class="col profile px-1">
-              <div class="icon-label-large icon-label initials" data-id="
-                "></div>
+              <div class="icon-label-large icon-label initials" data-id="{{current_user._id}}" id="large-{{current_user.first_name}} {{current_user.last_name}}"></div>
               <p class="profile" style="margin-left: 10px">
-                jjj
+                {{current_user.first_name}} {{current_user.last_name}}
               </p>
-              <p class="profile">
-                jjj
-              </p>
+              
             </div>
             {# TODO: replace with right url refs #}
             <a href="/core/user/jjj">

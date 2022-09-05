@@ -22,7 +22,8 @@ users = Users(db)
 @app.context_processor
 def inject_context():
     all_napkins = list(napkins.find({'owner': session['user']}))
-    return dict(all_napkins=all_napkins)
+    current_user = users.users.find_one({'_id': ObjectId(session['user'])})
+    return dict(all_napkins=all_napkins, current_user=current_user)
 
 
 
@@ -102,6 +103,7 @@ def index():
 @login_required()
 def napkin_detail(_id):
     napkin = napkins.find_one({'_id': ObjectId(_id)})
+    print(session['user'])
     return render_template('paint.html', napkin=napkin, user=session['user'])
 
 # Create napkin 
