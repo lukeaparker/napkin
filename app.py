@@ -22,7 +22,10 @@ users = Users(db)
 @app.context_processor
 def inject_context():
     all_napkins = list(napkins.find({'owner': session['user']}))
-    current_user = users.users.find_one({'_id': ObjectId(session['user'])})
+    if users.users.find_one({'_id': ObjectId(session['user'])}):
+        current_user = users.users.find_one({'_id': ObjectId(session['user'])})
+    else:
+        current_user = None
     return dict(all_napkins=all_napkins, current_user=current_user)
 
 
@@ -51,6 +54,8 @@ def add_header(response):
 # User registration 
 @app.route("/", methods=['GET'])
 def landing_page():
+    if session['user']:
+        return redirect('/index')
     return render_template('landing.html')
 
 # User registration 
@@ -71,6 +76,8 @@ def create_user():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
+        if session['user']:
+            return redirect('/index')
         return render_template('/auth/login.html')
     elif request.method == 'POST':
         user_credentials = {

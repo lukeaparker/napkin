@@ -2,23 +2,24 @@
 
 <aside class="container">
 
-    <script>
+    <!-- <script>
       // Set css var(--sidebar-width) to 65px
       document.querySelector('body.auth').style.setProperty('--sidebar-width',
         '65px');
-    </script>
+    </script> -->
   
-    <script>
-      // Set css var(--sidebar-width) to 285px
+    <!-- <script>
+      // Set css var(--sidebar-width) to 285pstyles
+      x
       document.querySelector('body.auth').style.setProperty('--sidebar-width',
         '285px');
-    </script>
+    </script> -->
     <nav class="sidebar main" aria-label="side">
-      <ul role="list">
+      <ul role="list" style="width: 100%; background-color: rgba(31, 34, 34, 0.4);">
   
         <li class="flex navbar-brand">
-          <div class="icon-label-orange navbar-brand-icon">
-            <span class="iconify" data-icon="bi:search"></span>
+          <div class="icon-label-brand navbar-brand-icon">
+            <span class="iconify" data-icon="heroicons:pencil-solid"></span>
           </div>
           <h1 class="label navbar-brand">
             Napkin
@@ -58,10 +59,14 @@
   
         <div class="divider"></div>
 
+        <div class="scrollbox">
+
         {% for napkin in all_napkins %}
           {{ nav_link(napkin) }}
   
         {% endfor %}
+      </div>
+
   
   
   

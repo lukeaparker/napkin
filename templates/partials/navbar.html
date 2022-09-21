@@ -1,7 +1,7 @@
 <header>
   <!-- <div class="blur-view"></div> -->
   {% set is_workspace = url_for(request.endpoint, **request.view_args) == '/workspace' %}
-  <nav class="navbar-top" aria-label="primary">
+  <nav class="navbar-top" aria-label="primary" style="width: 100%;">
     {% if not is_workspace %}  
       <div class="flex actions">
         <button class="icon-label-black" type="button" style="margin-right: 1em" id="nav-back"  onclick="history.back()">
@@ -17,27 +17,36 @@
       </div>
 
 {% if napkin %}
-      <form action="/update-title/{{napkin._id}}" method="POST">
+      <form action="/update-title/{{napkin._id}}" method="POST" style="width: 10rem;">
         <input name="title" class="edit-title no-outline" type="text" value="{{napkin.title}}">
       </form>
 
+          
+
+    <div class="search" style="margin-left: 50%; margin-right: 50%; width: 250px;">
+      <button id="marker" style="margin-left: 1em; margin-right: 1em;">
+        <span class="material-icons-outlined">
+          edit_off
+        </span>
+      </button>
 
 
-        <button id="marker" class="active" style="margin-left: 90%;">
-          <span class="material-icons-outlined">
-            edit
-          </span>
-        </button>
-        <button id="eraser">
-          <span class="material-icons-outlined">
-            edit_off
-          </span>
-        </button>
-        <button id="line">
-          <span class="material-icons-outlined">
-            border_color
-          </span>
-        </button>
+
+
+    <button id="eraser" style="margin-left: 1em; margin-right: 1em;">
+      <span class="material-icons-outlined">
+        edit_off
+      </span>
+    </button>
+    <button id="line" style="margin-left: 1em; margin-right: 1em;">
+      <span class="material-icons-outlined">
+        border_color
+      </span>
+    </button>
+
+    </div>
+
+
 
         {% endif %}
 
@@ -62,16 +71,10 @@
       <!-- <input value="#eeeeee" type="color" id="color"> -->
     {% endif %}
 
+    {% if current_user %}
+
     <ul role="list" class="flex dropdown-nav align-items-start">
-      {% if not is_workspace %}  
-      <li class="row mr-1">
-        <button type="button" id="modal-navbar-info-button" class="open-modal">
-          <div class="icon-label-black p-1">
-            <span class="iconify" data-icon="ant-design:info-circle-outlined"></span>
-          </div>
-        </button>
-      </li>
-      {% endif %}
+
 
 
 
@@ -83,7 +86,7 @@
         <li class="flex flex-column dropdown" aria-haspopup="true">
           <button class="icon-button" aria-controls="user-account-menu" aria-label="submenu" aria-haspopup="true"
             aria-label="User Account Menu" aria-expanded="false" tabindex="0">
-            <div class="icon-label initials" data-id="{{user._id}}"
+            <div class="icon-label initials" data-id="{{current_user._id}}"
               id="{{current_user.first_name}} {{current_user.last_name}}">
               <span class="iconify" data-icon="clarity:id-badge-solid"> </span>
             </div>
@@ -118,6 +121,7 @@
           </div>
         </li>
       </ul>
+      {% endif %}
   </nav>
   
 </header>
