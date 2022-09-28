@@ -23,12 +23,12 @@ users = Users(db)
 
 @app.context_processor
 def inject_context():
-    all_napkins = list(napkins.find({'owner': session['user']}))
-    if users.users.find_one({'_id': ObjectId(session['user'])}):
-        current_user = users.users.find_one({'_id': ObjectId(session['user'])})
+    if 'user' in session.keys() and users.users.find_one({'_id': ObjectId(session['user'])}):
+            all_napkins = list(napkins.find({'owner': session['user']}))
+            current_user = users.users.find_one({'_id': ObjectId(session['user'])})
+            return dict(all_napkins=all_napkins, current_user=current_user)
     else:
-        current_user = None
-    return dict(all_napkins=all_napkins, current_user=current_user)
+        return dict(no_session=True)
 
 
 
@@ -56,7 +56,7 @@ def add_header(response):
 # User registration 
 @app.route("/", methods=['GET'])
 def landing_page():
-    if session['user']:
+    if 'user' in session.keys() and users.users.find_one({'_id': ObjectId(session['user'])}):
         return redirect('/index')
     return render_template('landing.html')
 
@@ -64,7 +64,10 @@ def landing_page():
 @app.route("/register", methods=['GET', 'POST'])
 def create_user():
     if request.method == 'GET':
-        return render_template('auth/register.html')
+        if 'user' in session.keys() and users.users.find_one({'_id': ObjectId(session['user'])}):
+            return redirect('/index')
+        else:
+            return render_template('auth/register.html')
     elif request.method == 'POST':
         user = {
             'first_name': request.form.get('first_name'),
@@ -78,7 +81,7 @@ def create_user():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        if session['user']:
+        if 'user' in session.keys() and users.users.find_one({'_id': ObjectId(session['user'])}):
             return redirect('/index')
         return render_template('/auth/login.html')
     elif request.method == 'POST':
