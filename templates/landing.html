@@ -3,86 +3,24 @@
 
 
 {% block content %}
+<div class="flex">
 
-<div class="justify-content-center text-center">
-    <i class="fas fa-paint-roller" style="font-size: 200px; color: orange; margin: 30px;"></i>
-    <h1>Welcome to Napkin</h1>
-    <p>Easily create, share, and review hand written notes on the web.</p>
+  {% block messages %}
+  {{super()}}
+  {% endblock messages %}
 </div>
-<div class="container justify-content-center text-center w-50">
-    <div class="row">
-        <div class="col">
-            <a href="/login" class="form-control buble-button">Login</a>
+<div class="flex jumbocard" style="margin-bottom: 40%;">
+  <div class="icon-label-large icon-label-black">
+    <span class="iconify" data-icon="heroicons:pencil-solid">
+    </span>
+  </div>
+  <h2>&nbsp;</h2>
+  <h1>Welcome to Napkin</h1>
+  <p>Draw handwritten notes in the cloud, and access them from anywhere!</p>
+  <div class="row" style="padding-top: 15px;">
 
-        </div>
-        <div class="col">
-            <a href="/register" class="form-control buble-button" style="color: black; background-color: white;">Sign Up</a>
-
-        </div>
-    </div>        
+  <a href="/login" class="button">Login</a>
+  <a href="/register" class="button" style="width: 500px;">Register</a>
 </div>
-
+</div>
 {% endblock %}
-
-{% block scripts %}
-
-<script>
-  function clearErrors() {
-    document.getElementById("error_email").innerHTML = "";
-    document.getElementById("error_password").innerHTML = "";
-  }
-</script>
-<script type="text/javascript">
-  $("#loginForm").submit(function (e) {
-    e.preventDefault();
-    $.ajax({
-      type: "POST",
-      url: "/login",
-      data: JSON.stringify(getFormData($(this))),
-      success: function (response) {
-        if ("{{LOGIN_REDIRECT_URL}}") {
-          window.location.href = "{{LOGIN_REDIRECT_URL}}";
-        } else {
-          window.location = window.location.origin;
-        }
-      },
-      error: function (jqXHR, exception) {
-        var errors = jqXHR.responseJSON.errors;
-        if (errors && "json" in errors) errors = errors.json;
-        var message = jqXHR.responseJSON.message;
-
-        if (errors) {
-          // console.log(errors);
-          // Clear current errors
-          $(".error-message").each(function () {
-            $(this).text("");
-          });
-
-          // Set error messages
-          for (const [key, value] of Object.entries(errors)) {
-            // console.log("#error_" + key);
-            $("#error_" + key).text(value[0]);
-          }
-        } else {
-          alert(message);
-        }
-      },
-      dataType: "json",
-      contentType: "application/json",
-    });
-  });
-
-  function getFormData($form) {
-    var unindexed_array = $form.serializeArray();
-    var indexed_array = {};
-
-    $.map(unindexed_array, function (n, i) {
-      indexed_array[n["name"]] = n["value"];
-    });
-
-    return indexed_array;
-  }
-</script>
-{% endblock %}
-
-

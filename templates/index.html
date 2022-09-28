@@ -17,7 +17,7 @@
   <section class="card-header flex " style="overflow: scroll;">
     <div class="collection-info flex">
       <div class="icon-label-large icon-label-black">
-        <span class="iconify" data-icon="file-icons:api-blueprint">
+        <span class="iconify" data-icon="heroicons:pencil-solid">
         </span>
       </div>
       <div>
@@ -31,7 +31,7 @@
     <table class="table table-bordered table-strip">
       <thead>
         <tr>
-          <th>NAME</th>
+          <th>TITLE</th>
           <th>OWNER</th>
           <th>DATE CREATED</th>
           <th></th>
@@ -44,7 +44,7 @@
           <td>
             <div class="flex">
               <div class="icon-label " data-id="{{ napkin._id }}" id="@{{ napkin._id }}">
-                <span class="iconify" data-icon="file-icons:api-blueprint"></span>
+                <span class="iconify" data-icon="heroicons:pencil-solid"></span>
               </div>
               <span class="attribute label">
                 {{napkin.title}}}
@@ -54,6 +54,7 @@
 
           <td>
             <span class="attribute label">
+              {{current_user.first_name}} {{current_user.last_name}}
             </span>
           </div>
         </td>
@@ -66,7 +67,7 @@
     </td>
 
           <td class="flex flex-end">
-            <a class="icon-label-brightgreen" href="/blueprint/{{napkin._id}}"
+            <a class="icon-label-brightgreen" href="/napkin/{{napkin._id}}"
               aria-label="Review" data-tooltip="Review">
               <span class="iconify" data-icon="ph:caret-right-bold"></span>
             </a>

@@ -7,121 +7,71 @@
         <button class="icon-label-black" type="button" style="margin-right: 1em" id="nav-back"  onclick="history.back()">
           <span class="iconify" data-icon="ph:caret-left-bold"></span>
         </button>
-
         <button class="icon-label-black"  type="button" id="nav-forward" onclick="history.forward()">
           <span class="iconify" data-icon="ph:caret-right-bold"></span>
-        </button>
-
-
-        
+        </button> 
       </div>
-
 {% if napkin %}
-      <form action="/update-title/{{napkin._id}}" method="POST" style="width: 10rem;">
-        <input name="title" class="edit-title no-outline" type="text" value="{{napkin.title}}">
-      </form>
-
-          
-
+    <form action="/update-title/{{napkin._id}}" method="POST" style="width: 10rem;">
+      <input name="title" class="edit-title no-outline" type="text" value="{{napkin.title}}">
+    </form>
     <div class="search" style="margin-left: 50%; margin-right: 50%; width: 250px;">
-      <button id="marker" style="margin-left: 1em; margin-right: 1em;">
-        <span class="material-icons-outlined">
-          edit_off
-        </span>
-      </button>
-
-
-
-
+    <button id="marker" style="margin-left: 1em; margin-right: 1em;">
+      <span class="iconify" data-icon="heroicons:pencil""></span>
+      </span>
+    </button>
     <button id="eraser" style="margin-left: 1em; margin-right: 1em;">
-      <span class="material-icons-outlined">
-        edit_off
+      <span class="iconify" data-icon="clarity:eraser-line"></span>
       </span>
     </button>
     <button id="line" style="margin-left: 1em; margin-right: 1em;">
-      <span class="material-icons-outlined">
-        border_color
+      <span class="iconify" data-icon="ci:line-xl""></span>
       </span>
     </button>
-
+    <button id="line" style="margin-left: 1em; margin-right: 1em;">
+      <a href="/delete/{{napkin._id}}" style="text-decoration: none;"><span class="iconify" data-icon="bx:trash""></span></a>
+      </span>
+    </button>
     </div>
-
-
-
-        {% endif %}
-
-
-
-
-      
-   
-
-
-
-
-
-
-
-
-
-
-
-  
-
-      <!-- <input value="#eeeeee" type="color" id="color"> -->
     {% endif %}
-
+    <!-- <input value="#eeeeee" type="color" id="color"> -->
+    {% endif %}
     {% if current_user %}
-
-    <ul role="list" class="flex dropdown-nav align-items-start">
-
-
-
-
-
-
-
-
-
-        <li class="flex flex-column dropdown" aria-haspopup="true">
-          <button class="icon-button" aria-controls="user-account-menu" aria-label="submenu" aria-haspopup="true"
-            aria-label="User Account Menu" aria-expanded="false" tabindex="0">
-            <div class="icon-label initials" data-id="{{current_user._id}}"
-              id="{{current_user.first_name}} {{current_user.last_name}}">
-              <span class="iconify" data-icon="clarity:id-badge-solid"> </span>
+      <ul role="list" class="flex dropdown-nav align-items-start">
+          <li class="flex flex-column dropdown" aria-haspopup="true">
+            <button class="icon-button" aria-controls="user-account-menu" aria-label="submenu" aria-haspopup="true"
+              aria-label="User Account Menu" aria-expanded="false" tabindex="0">
+              <div class="icon-label initials" data-id="{{current_user._id}}"
+                id="{{current_user.first_name}} {{current_user.last_name}}">
+                <span class="iconify" data-icon="clarity:id-badge-solid"> </span>
+              </div>
+              <div class="user">
+                <span class="ms-1">{{current_user.first_name}}&nbsp;{{current_user.last_name}}</span>
+              </div>
+            </button>
+            <div class="flex blur dropdown-content">
+              <div class="col profile px-1">
+                <div class="icon-label-large icon-label initials" data-id="{{current_user._id}}" id="large-{{current_user.first_name}} {{current_user.last_name}}"></div>
+                <p class="profile" style="margin-left: 10px">
+                  {{current_user.first_name}} {{current_user.last_name}}
+                </p>
+              </div>
+              {# TODO: replace with right url refs #}
+              <a href="/core/user/jjj">
+                <span class="flex ms-1">
+                  <span class="iconify" data-icon="bi:person-fill"></span>
+                  <span class="ms-1">Account</span>
+                </span>
+              </a>
+              <a href="/logout">
+                <span class="flex ms-1">
+                  <span class="iconify" data-icon="mdi:logout"></span>
+                  <span class="ms-1">Logout</span>
+                </span>
+              </a>
             </div>
-
-            <div class="user">
-              <span class="ms-1">{{current_user.first_name}}&nbsp;{{current_user.last_name}}</span>
-             
-            </div>
-          </button>
-
-          <div class="flex blur dropdown-content">
-            <div class="col profile px-1">
-              <div class="icon-label-large icon-label initials" data-id="{{current_user._id}}" id="large-{{current_user.first_name}} {{current_user.last_name}}"></div>
-              <p class="profile" style="margin-left: 10px">
-                {{current_user.first_name}} {{current_user.last_name}}
-              </p>
-              
-            </div>
-            {# TODO: replace with right url refs #}
-            <a href="/core/user/jjj">
-              <span class="flex ms-1">
-                <span class="iconify" data-icon="bi:person-fill"></span>
-                <span class="ms-1">Account</span>
-              </span>
-            </a>
-            <a href="/core/api/logout">
-              <span class="flex ms-1">
-                <span class="iconify" data-icon="mdi:logout"></span>
-                <span class="ms-1">Logout</span>
-              </span>
-            </a>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
       {% endif %}
   </nav>
-  
 </header>

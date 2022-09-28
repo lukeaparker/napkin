@@ -9,8 +9,7 @@
   {{super()}}
   {% endblock messages %}
 </div>
-{# TODO: migrate error validation to flash messages instead  #}
-<div class="flex jumbocard">
+<div class="flex jumbocard" style="margin-bottom: 30%;"">
   <div class="icon-label-large icon-label-black">
     <span class="iconify" data-icon="bi:person-fill">
     </span>
@@ -40,7 +39,7 @@
 
     <div class="flex justify">
       <div class="row">
-        Don't have an account? Contact (412) 677 - 9825
+        Don't have an account? <a class="text-blue" href="/register">Register</a>
       </div>
       <div class="spacer"></div>
 

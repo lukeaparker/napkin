@@ -9,6 +9,8 @@ import bcrypt
 from functools import wraps
 from models import Users
 from os import environ
+from datetime import date
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'please'    
@@ -95,7 +97,7 @@ def login():
 @app.route('/logout')
 def logout():
     session['user'] = None 
-    return redirect('/login')
+    return redirect('/')
 
 # Index view         
 @app.route("/index")
@@ -118,8 +120,9 @@ def napkin_detail(_id):
 @login_required()
 def create():
     new_napkin = napkins.insert_one({
-        'owner': session['user'], 
         'title': 'Untitled Napkin',
+        'owner': session['user'], 
+        'date_created': str(date.today()),
         'canvas': {
             'attrs': {'height': 4000, 'width': 1000},
             'className': 'Stage',
