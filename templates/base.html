@@ -29,7 +29,7 @@
     integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous"
 ></script>
-  <title>Konva Canvas Scrolling Drag Demo</title>
+  <title>Napkin</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
     rel="stylesheet">
   
@@ -53,7 +53,7 @@
   {% block styles %}
 
   <link rel="shortcut icon"
-    href="{{ url_for('static', filename='favicon.ico') }} "
+    href="{{ url_for('static', filename='pencil-solid.svg') }} "
     type="image/x-icon" />
   <link rel="stylesheet" type="text/css"
     href="{{ url_for('static', filename='css/styles.css') }}">
@@ -61,6 +61,7 @@
 
   <title>
     {% block title %}
+    Napkin
     {% endblock title %}
   </title>
   {% endblock head %}

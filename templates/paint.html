@@ -92,7 +92,7 @@
 
     $.ajax({
         async: false,
-        url: 'http://localhost:5001/get-napkin-canvas/{{napkin._id}}',
+        url: '/get-napkin-canvas/{{napkin._id}}',
         type: 'GET',
         success: function(data){
           canvas = data;
@@ -126,7 +126,7 @@
       saveStage.add(drawLayer);
 
       $.ajax({
-          url: 'http://127.0.0.1:5001/update/{{napkin._id}}',
+          url: '/update/{{napkin._id}}',
           type: 'POST',
           data: {'canvas': saveStage.toJSON()},
           success: function(data) {}
@@ -195,7 +195,7 @@
     });
 
 
-    var scaleBy = 1.09;
+    var scaleBy = 1.01;
     stage.on('wheel', (e) => {
       e.evt.preventDefault();
       var oldScale = stage.scaleX();

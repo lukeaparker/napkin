@@ -136,30 +136,28 @@ def create():
 
 # Update napkin 
 @app.route("/update/<_id>", methods=['POST'])
+@login_required()
 def update(_id):
-    if request.form['canvas']:
+    if 'canvas' in request.form.keys():
         canvas = json.loads(request.form['canvas'])
         napkin = napkins.update_one({'_id': ObjectId(_id)}, {'$set': {'canvas': canvas}})
-        title = request.form['title']
-        napkin = napkins.update_one({'_id': ObjectId(_id)}, {'$set': {'title': title}})
         return 'success'
-
-# Update title 
-@app.route("/update-title/<_id>", methods=['POST'])
-@login_required()
-def update_title(_id):
+    if 'title' in request.form.keys():
         title = request.form['title']
         napkin = napkins.update_one({'_id': ObjectId(_id)}, {'$set': {'title': title}})
         return redirect(f'/napkin/{_id}')
 
+
 # Get napkin json 
 @app.route("/get-napkin-canvas/<_id>", methods=['GET'])
+@login_required()
 def get_napkin_canvas(_id):
     napkin = napkins.find_one({'_id': ObjectId(_id)})
     return napkin['canvas']
 
 # Delete napkin
 @app.route("/delete/<_id>", methods=['GET'])
+@login_required()
 @login_required()
 def delete_napkin(_id):
         napkin = napkins.delete_one({'_id': ObjectId(_id)})

@@ -3,14 +3,17 @@
 <div class="container collections">
   {% if not napkins %}
   <section class= "card-header">
-    <div class="flex hero center">
-      <div class="icon-label-large icon-label-clear">
-        <span class="iconify" data-icon="file-icons:api-blueprint">
+    <div class="flex jumbocard" style="margin-bottom: 40%;">
+      <div class="icon-label-large icon-label-black">
+        <span class="iconify" data-icon="heroicons:pencil-solid">
         </span>
       </div>
-      <div>
-        <h2>No Results Found</h2>
-      </div>
+      <h2>&nbsp;</h2>
+      <h1>No Napkins Found</h1>
+      <div class="row" style="padding-top: 15px;">
+    
+      <a href="/create" class="button blue">+ New Napkin</a>
+    </div>
     </div>
   </section>
   {% else %}
@@ -67,8 +70,8 @@
     </td>
 
           <td class="flex flex-end">
-            <a class="icon-label-brightgreen" href="/napkin/{{napkin._id}}"
-              aria-label="Review" data-tooltip="Review">
+            <a class="icon-label-blue" href="/napkin/{{napkin._id}}"
+              aria-label="VIEW" data-tooltip="VIEW">
               <span class="iconify" data-icon="ph:caret-right-bold"></span>
             </a>
           </td>

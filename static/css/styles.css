@@ -92,7 +92,7 @@ body {
   --custom-color: linear-gradient(
     to top,
     rgb(2, 16, 31) 0%,
-    rgb(1, 88, 105) 100%
+    rgb(47, 56, 57) 100%
   );
   overflow: hidden !important;
   /* height: 100%; */
@@ -684,8 +684,7 @@ body.auth {
 
 body.unauth {
   background: rgb(5, 40, 74);
-  background: linear-gradient(to top, rgb(2, 16, 31) 0%, rgb(1, 88, 105) 100%);
-
+  background: var(--custom-color);
   flex: 1;
   flex-direction: row;
   justify-content: center;
