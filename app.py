@@ -41,4 +41,4 @@ def create_app(mode='default'):
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True, host='0.0.0.0', port=os.environ.get('FLASK_RUN_PORT'))
+    app.run(debug=True, host=os.environ.get('HOST'), port=os.environ.get('FLASK_RUN_PORT'))

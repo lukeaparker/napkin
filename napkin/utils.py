@@ -1,6 +1,6 @@
 
 
-from flask import session
+from flask import session, redirect
 import sys
 import json
 import os
