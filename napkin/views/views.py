@@ -37,7 +37,7 @@ def register():
     else:
         return render_template('auth/register.html')
 
-@views.route('/login', methods=['GET', 'POST'])
+@views.route('/login', methods=['GET'])
 def login():
     if 'user' in session.keys() and users.users.find_one({'_id': ObjectId(session['user'])}):
         return redirect('/index')
@@ -48,14 +48,14 @@ def login():
 @login_required()
 def list_view():
     all_napkins = list(napkins.find({'owner': session['user']}))
-    return render_template('index.html', napkins=all_napkins, user=session['user'])
+    return render_template('napkins.html', napkins=all_napkins, user=session['user'])
 
 # Napkin detail view 
 @views.route("/napkin/<_id>")
 @login_required()
 def detail_view(_id):
     napkin = napkins.find_one({'_id': ObjectId(_id)})
-    return render_template('paint.html', napkin=napkin, user=session['user'])
+    return render_template('napkin.html', napkin=napkin, user=session['user'])
     
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('FLASK_RUN_PORT'))
