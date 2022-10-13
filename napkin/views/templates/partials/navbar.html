@@ -1,8 +1,6 @@
 <header>
   <!-- <div class="blur-view"></div> -->
-  {% set is_workspace = url_for(request.endpoint, **request.view_args) == '/workspace' %}
   <nav class="navbar-top" aria-label="primary" style="width: 100%;">
-    {% if not is_workspace %}  
       <div class="flex actions">
         <button class="icon-label-black" type="button" style="margin-right: 1em" id="nav-back"  onclick="history.back()">
           <span class="iconify" data-icon="ph:caret-left-bold"></span>
@@ -12,7 +10,7 @@
         </button> 
       </div>
 {% if napkin %}
-    <form action="/update/{{napkin._id}}" method="POST" style="width: 10rem;">
+    <form action="/api/update/{{napkin._id}}" method="POST" style="width: 10rem;">
       <input name="title" class="edit-title no-outline" type="text" value="{{napkin.title}}">
     </form>
     <div class="search" style="margin-left: 50%; margin-right: 50%; width: 250px;">
@@ -29,13 +27,12 @@
       </span>
     </button>
     <button id="line" style="margin-left: 1em; margin-right: 1em;">
-      <a href="/delete/{{napkin._id}}" style="text-decoration: none;"><span class="iconify" data-icon="bx:trash""></span></a>
+      <a href="/api/delete/{{napkin._id}}" style="text-decoration: none;"><span class="iconify" data-icon="bx:trash""></span></a>
       </span>
     </button>
     </div>
     {% endif %}
     <!-- <input value="#eeeeee" type="color" id="color"> -->
-    {% endif %}
     {% if current_user %}
       <ul role="list" class="flex dropdown-nav align-items-start">
           <li class="flex flex-column dropdown" aria-haspopup="true">
@@ -57,7 +54,7 @@
                 </p>
               </div>
               {# TODO: replace with right url refs #}
-              <a href="/logout">
+              <a href="/api/logout">
                 <span class="flex ms-1">
                   <span class="iconify" data-icon="mdi:logout"></span>
                   <span class="ms-1">Logout</span>

@@ -92,7 +92,7 @@
 
     $.ajax({
         async: false,
-        url: '/get-napkin-canvas/{{napkin._id}}',
+        url: '/api/get/napkin/canvas/{{napkin._id}}',
         type: 'GET',
         success: function(data){
           canvas = data;
@@ -126,7 +126,7 @@
       saveStage.add(drawLayer);
 
       $.ajax({
-          url: '/update/{{napkin._id}}',
+          url: '/api/update/{{napkin._id}}',
           type: 'POST',
           data: {'canvas': saveStage.toJSON()},
           success: function(data) {}
