@@ -2,15 +2,17 @@ version: "3"
 services:
     mongo:
         image: mongo
-        container_name: mongo
+        container_name: napkin-mongo
         restart: always
         environment:
             MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
             MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+        command: mongod --port ${MONGO_PORT}
         ports:
             - ${MONGO_PORT}:${MONGO_PORT}
     web:
+        container_name: napkin-web
         build:
             context: .
             dockerfile: Dockerfile
