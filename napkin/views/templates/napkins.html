@@ -1,11 +1,10 @@
 {% extends "layouts/base.html" %}
 {% block content %}
-<div class="container collections">
   {% if not napkins %}
   <section class= "card-header">
     <div class="flex jumbocard" style="margin-bottom: 40%;">
       <div class="icon-label-large icon-label-black">
-        <span class="iconify" data-icon="heroicons:pencil-solid">
+        <span class="iconify" data-icon="game-icons:pencil">
         </span>
       </div>
       <h2>&nbsp;</h2>
@@ -17,74 +16,17 @@
     </div>
   </section>
   {% else %}
-  <section class="card-header flex " style="overflow: scroll;">
-    <div class="collection-info flex">
-      <div class="icon-label-large icon-label-black">
-        <span class="iconify" data-icon="heroicons:pencil-solid">
-        </span>
-      </div>
-      <div>
-        <h2>Napkins</h2>
-      </div>
-    </div>
-  </section>
 
 
-  <section class="card-body">
-    <table class="table table-bordered table-strip">
-      <thead>
-        <tr>
-          <th>TITLE</th>
-          <th>OWNER</th>
-          <th>DATE CREATED</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
 
-        {% for napkin in napkins %}
-        <tr>
-          <td>
-            <div class="flex">
-              <div class="icon-label " data-id="{{ napkin._id }}" id="@{{ napkin._id }}">
-                <span class="iconify" data-icon="heroicons:pencil-solid"></span>
-              </div>
-              <span class="attribute label">
-                {{napkin.title}}}
-              </span>
-            </div>
-          </td>
-
-          <td>
-            <span class="attribute label">
-              {{current_user.first_name}} {{current_user.last_name}}
-            </span>
-          </div>
-        </td>
-
-      <td>
-        <span class="attribute label">
-          {{napkin.date_created}}
-        </span>
-      </div>
-    </td>
-
-          <td class="flex flex-end">
-            <a class="icon-label-blue" href="/napkin/{{napkin._id}}"
-              aria-label="VIEW" data-tooltip="VIEW">
-              <span class="iconify" data-icon="ph:caret-right-bold"></span>
-            </a>
-          </td>
-        </tr>
-        {% endfor %}
-
-      </tbody>
-    </table>
+  <div class="row" style="overflow: scroll !important; min-height: 75%;">
+{% for napkin in napkins %}
+    {% include '/partials/napkin-card.html' %}
+  {% endfor %}
+  </div>
 
 
-  </section>
   {% endif %}
-</div>
 {% endblock %}
 
 {% block modal %}

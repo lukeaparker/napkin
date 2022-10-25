@@ -106,7 +106,7 @@
     var starterStage = {
       width: sceneWidth,
       height: sceneHeight,
-      container: 'container'
+      container: 'container',
     };
 
     var stage = new Konva.Stage(starterStage);
@@ -118,7 +118,7 @@
     function save() {
       var saveStageConfig = {
         width: canvas.attrs.width,
-        height: canvas.attrs.height,
+        height: 1000,
         container: 'hidden'
       };
 
@@ -128,7 +128,7 @@
       $.ajax({
           url: '/api/update/{{napkin._id}}',
           type: 'POST',
-          data: {'canvas': saveStage.toJSON()},
+          data: {'canvas': saveStage.toJSON(), 'thumbnail': saveStage.toDataURL()},
           success: function(data) {}
       });
 

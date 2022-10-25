@@ -50,7 +50,7 @@ def create():
         'owner': session['user'], 
         'date_created': str(date.today()),
         'canvas': {
-            'attrs': {'height': 4000, 'width': 1000},
+            'attrs': {'height': 12017, 'width': 4828},
             'className': 'Stage',
             'children': []
         }
@@ -63,7 +63,7 @@ def create():
 def update(_id):
     if 'canvas' in request.form.keys():
         canvas = json.loads(request.form['canvas'])
-        napkin = napkins.update_one({'_id': ObjectId(_id)}, {'$set': {'canvas': canvas}})
+        napkin = napkins.update_one({'_id': ObjectId(_id)}, {'$set': {'canvas': canvas, 'thumbnail': request.form['thumbnail']}})
         return 'success'
     if 'title' in request.form.keys():
         title = request.form['title']

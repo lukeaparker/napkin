@@ -2047,3 +2047,17 @@ details[open] summary .icon {
     transform:rotate(360deg);
   }
 }
+
+.column {
+  float: left;
+  width: 33%;
+}
+
+
+
+.card {
+  margin: 10px;
+  background-color: var(--black);
+  height: 300px;
+  border-radius: 30px;
+}

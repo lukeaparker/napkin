@@ -1,9 +1,125 @@
-<div class="w-100 card d-flex justify-content-center">
-    <div class="row  container justify-content-between align-items-center">
-      <div class="column d-flex align-items-center"><span class="fas fa-pencil-ruler icon-orange"></span> <div style="margin-left: 70px;">{{napkin.title}}</div></div>
-        <div>
-          <a style="margin-left: 10px; margin-right: 10px;" href="/napkin/{{napkin._id}}"><i class="fas fa-edit"></i></a>
-          <a style="margin-left: 10px; margin-right: 10px;" href="/delete/{{napkin._id}}"><i class="fas fa-trash-alt"></i></a>
-        </div>
-    </div>
+{% block content %}
+<div class="column">
+  <div class="card">
+
+
+    <a class="flex object" href="/napkin/{{napkin._id}}" aria-label="Object" style="margin-top: 5px; margin-left: 10px;">
+      <div class="icon-label" data-id="{{ napkin._id }}"  id="@{{ napkin._id }}">
+        <span class="iconify" data-icon="heroicons:pencil-solid"">
+        </span>
+      </div>
+      <span class="label">
+        {{ napkin.title}}
+      </span>
+    </a>
+    
+    <div id="parent" style="overflow:hidden; height: 100%; width: 100%;;">
+    <div id="container-{{napkin._id}}"></div>
+  </div>
 </div>
+</div>
+
+
+
+  <script>
+    var sceneWidth = 1000;
+    var sceneHeight = 4000;
+
+    var isPaint = false;
+    var mode = 'brush';
+    var activeColor = '#eeeeee';
+    var currentColor = '#eeeeee';
+
+  
+    var colorButton = $('#color');
+
+
+
+
+
+
+
+
+    var canvas = null;
+
+    var drawLayer = new Konva.Layer();
+
+    $.ajax({
+        async: false,
+        url: '/api/get/napkin/canvas/{{napkin._id}}',
+        type: 'GET',
+        success: function(data){
+          canvas = data;
+          if (canvas.children[0]) {
+            drawLayer = Konva.Node.create(canvas.children[0]);
+          }
+        }
+    });
+
+
+    var starterStage = {
+      width: sceneWidth,
+      height: sceneHeight,
+      container: 'container-{{napkin._id}}',
+    };
+
+    var stage = new Konva.Stage(starterStage);
+    stage.add(drawLayer);
+
+    var saveStage = null;
+
+
+    function save() {
+      var saveStageConfig = {
+        width: canvas.attrs.width,
+        height: 1000,
+        container: 'hidden'
+      };
+
+      saveStage = new Konva.Stage(saveStageConfig);
+      saveStage.add(drawLayer);
+
+      $.ajax({
+          url: '/api/update/{{napkin._id}}',
+          type: 'POST',
+          data: {'canvas': saveStage.toJSON(), 'thumbnail': saveStage.toDataURL()},
+          success: function(data) {}
+      });
+
+      $('#hidden')[0].style.display = 'none';
+
+      stage.add(drawLayer);
+    }
+
+
+
+    var lastLine = null;
+
+
+
+
+
+
+
+
+    function fitStageIntoParentContainer() {
+        var container = document.querySelector('#parent');
+
+        // now we need to fit stage into parent container
+        var containerWidth = container.offsetWidth;
+
+        // but we also make the full scene visible
+        // so we need to scale all objects on canvas
+        var scale = containerWidth / sceneWidth;
+
+        stage.width(sceneWidth * scale);
+        stage.height(sceneHeight * scale);
+        stage.scale({ x: scale, y: scale });
+      }
+
+      fitStageIntoParentContainer();
+      // adapt the stage on any window resize
+      window.addEventListener('resize', fitStageIntoParentContainer);
+  </script>
+
+{% endblock content %}
