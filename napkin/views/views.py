@@ -57,6 +57,7 @@ def detail_view(_id):
     napkin = napkins.find_one({'_id': ObjectId(_id)})
     return render_template('napkin.html', napkin=napkin, user=session['user'])
     
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('FLASK_RUN_PORT'))
 

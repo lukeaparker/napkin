@@ -1,0 +1,23 @@
+{% extends "layouts/auth.html" %}
+
+
+
+{% block content %}
+<div class="flex">
+
+  {% block messages %}
+  {{super()}}
+  {% endblock messages %}
+</div>
+<div class="flex jumbocard" style="margin-bottom: 40%;">
+  <div class="icon-label-large icon-label-black">
+    404
+  </div>
+  <h2>&nbsp;</h2>
+  <h1>Page Not Found</h1>
+  <div class="row" style="padding-top: 15px;">
+
+    <a href="/napkins" class="button blue" style="width: 500px !important;">Go Home</a>
+</div>
+</div>
+{% endblock %}
